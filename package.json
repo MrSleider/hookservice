@@ -1,0 +1,31 @@
+{
+  "name": "hookservice",
+  "version": "0.0.1",
+  "description": "A microservice for reading and storing data into a db",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrSleider/hookservice.git"
+  },
+  "keywords": [
+    "service",
+    "mongodb",
+    "db",
+    "reader",
+    "writter"
+  ],
+  "author": "SLeider",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/MrSleider/hookservice/issues"
+  },
+  "homepage": "https://github.com/MrSleider/hookservice#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.3"
+  }
+}
