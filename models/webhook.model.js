@@ -9,6 +9,14 @@ const Model = new Schema({
     required: [true, 'The webhook alias is required']
   },
   description: String,
+  action: {
+    type: String,
+    enum: ['GET', 'SAVE', 'UPDATE', 'REMOVE']
+  },
+  connector: {
+    type: Schema.ObjectId,
+    ref: 'Connector'
+  },
   queries: []
 });
 
