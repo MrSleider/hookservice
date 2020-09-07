@@ -3,13 +3,35 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 const model = new Schema({
-    alias: String,
+    alias: {
+      type: String,
+      required: true
+    },
     description: String,
-    endpoint: String,
-    port: Number,
-    db: String,
-    db_user: String,
-    db_password: String
+    endpoint: {
+      type: String,
+      required: true
+    },
+    port: {
+      type: Number,
+      required: true,
+      min: 3000,
+      max: 60000
+    },
+    db: {
+      type: String,
+      required: true
+    },
+    db_user: {
+      type: String,
+      required: true,
+      select: false
+    },
+    db_password: {
+      type: String,
+      required: true,
+      select: false
+    }
 });
 
 
