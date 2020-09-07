@@ -21,6 +21,11 @@ get_webhook     = (req, res) => {
       return res.status(400).send({ message: 'Could not get the webhook' });
     }
 
+    if (!webhook) {
+      // Could not found the webhook id
+      return res.status(404).send({ message: `Could not find the webhook with ID: ${id}`});
+    }
+
     return res.status(200).send({ message: 'The webhook has been found!', data: webhook });
   });
 }
