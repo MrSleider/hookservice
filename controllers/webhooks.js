@@ -76,8 +76,7 @@ remove_webhook  = (req, res) => {
 function getTestingQueries() {
   // Just for testing
   return [
-    { collection: 'cars', filter: { param: 'brand', value: 'audi'}},
-    { collection: 'people'}
+    { collection: 'cars' }
   ];
 }
 

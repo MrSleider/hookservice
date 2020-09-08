@@ -1,26 +1,21 @@
 var mongoose = require('mongoose');
 var Webhook = require('../models/webhook.model.js');
 
-trigger_webhook = (req, res) => {
+trigger_webhook = async (req, res) => {
 
   if (!req.hook) {
     return res.status(400).send({ message:'Something is wrong with the hook' });
   }
 
-  const hook = req.hook;
+  const hook  = req.hook;
+  var   data  = [];
 
-  console.log(hook.queries.map((query) => {
-    return createSchema(query.collection);
-  }))
+  for ( let query of hook.queries) {
+    var model = createSchema(query.collection);
+    data.push(await model.find(getFilterParams(query.filters) || {}));
+  }
 
-  // The magic line
-  Promise.all(hook.queries.map((query) => {
-    return createSchema(query.colletion).find({});
-  })).then( ([]) => {
-    console.log('The end')
-  });
-
-  return res.status(200).send({ message: 'The webhook has been found!' });
+  return res.status(200).send({ message: 'The data has been found!', data: data });
 }
 
 
@@ -59,10 +54,25 @@ configure_connector = (req, res, next) => {
 function createSchema(collection) {
   // This method returns an empty schema in order to use it for searching collections
   let Schema = mongoose.Schema;
-  return mongoose.model(collection, new Schema());
+  return mongoose.model(collection, new Schema({}, {strict: false}));
 }
 
-function processQuery() {}
+function getFilterParams( filters ) {
+  // This function takes an array of objects. Those objects have a param and a value.
+  // The query will be filtered using this param-key values
+  filters = filters || [];
+
+  if ( filters.length == 0 ) return {}
+
+  var final_filter = {};
+
+  for ( let filter of filters) {
+    // Should have two params : "param" and "value"
+    final_filter[filter.param] = filter.value;
+  }
+
+  return final_filter;
+}
 
 module.exports = {
   trigger_webhook,
