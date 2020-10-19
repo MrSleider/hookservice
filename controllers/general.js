@@ -6,7 +6,8 @@ root_request  = (req, res) => {
 get_status    = (req, res) => {}
 
 not_found     = (req, res) => {
-  return res.status(404).send({ message: 'The route does not exist!' })
+  if (req.hook_error) { return } // Prioritze the hook error than the not found.
+  return res.status(404).send({ message: 'The route does not exist!' });
 }
 
 module.exports = {root_request, get_status, not_found}
