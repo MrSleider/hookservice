@@ -39,7 +39,8 @@ create_webhook  = (req, res) => {
 
   webhook.alias       = params.alias;
   webhook.description = params.description || 'There is no description for this webhok';
-  webhook.queries     = getTestingQueries();
+  webhook.action      = params.action;
+  webhook.queries     = JSON.parse(params.queries) || getTestingQueries();
 
   try {
     webhook.save((err, savedWebhook) => {
